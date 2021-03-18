@@ -1,0 +1,67 @@
+import java.util.*;
+
+public class Split {
+    ConsoleService consoleService = new ConsoleService();
+
+    public class User {
+
+
+    String username;
+
+        public String getEmail() {
+            return email;
+        }
+
+        String email;
+
+    public void foo() {
+
+        System.out.println("Введие данные:");
+        String str1 = consoleService.scanner.nextLine();
+
+        String[] sub = str1.split("->");
+        email = sub[1];
+        username = sub[0];
+        email.split(",");
+        System.out.println(email);
+        System.out.println(username);
+    }
+    }
+        public static Map<User, Set<String>> convert ( List<User> input) {
+            // первая тут будут уники мейлы и пользователь который последний добавил его
+            Map<String, User> one = new HashMap<>();
+            Map<User, Set<String>> two = new HashMap<>();
+
+            // тут будут уники юзеры и мейлы из первой карты где он засветился с таким мейлом
+            // выгружаем всех юзеров попорядку
+            for (User user : input
+            ) {
+                User temp = user;
+                // выгружаем каждого юзера почту по одной
+                for (String email : user.getEmail()
+                ) {
+                    // если почты нет еще в
+                    if (!one.containsKey(email)) {
+                        // то добавляем почту и юзера
+                        one.put(email, temp);
+                    } else {
+                        // но если есть то всю почту этого юзера кидаем тому кто ее уже принеc
+                        one.get(email).getEmail().addAll(temp.getEmail());
+                        for (String mail2 : one.get(email).getEmail()) {
+                            one.putIfAbsent(mail2, one.get(email));
+                        }
+                        break;
+                    }
+                    two.put(one.get(email), one.get(email).getMails());
+                }
+
+            }
+            return two;
+        }
+
+
+
+
+    }
+
+
